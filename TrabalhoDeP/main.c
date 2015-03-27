@@ -1,13 +1,13 @@
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include "vector.h"
+#include "ins_dados.h"
 
 int main(int argc, char *argv[]){
-	int n_pessoas;
-	vector v1;
-
-	printf("Bem vindo, quantas pessoas existem na simulacao ?\n");
-	scanf_s("%d", &n_pessoas);
+	if (welcome_conf() != 0){
+		printf("");
+	}
 
 	return 0;
 }

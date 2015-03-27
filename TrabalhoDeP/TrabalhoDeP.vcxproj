@@ -78,7 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ins_dados.cpp" />
+    <ClCompile Include="ins_dados.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="vector.c" />
   </ItemGroup>

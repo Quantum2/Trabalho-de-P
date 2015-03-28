@@ -59,17 +59,18 @@ int welcome_conf(){
 
 	for (i = 0; i < n_pessoas; i++){
 		ClearScreen();
-		pessoa temp;
+		pessoa *temp;
+		temp = (pessoa *)malloc(sizeof(pessoa));
 
 		printf("Pessoa %d\n", i + 1);
 		printf("Nome : ");
-		scanf("%s", &temp.nome);
+		scanf("%s", temp->nome);
 		printf("Idade: ");
-		scanf("%d", &temp.idade);
+		scanf("%d", &temp->idade);
 
-		temp.ID = i + 1;
+		temp->ID = i + 1;
 
-		vector_add(&v1, &temp);
+		vector_add(&v1, temp);
 	}
 
 	ClearScreen();
@@ -84,13 +85,11 @@ int welcome_conf(){
 	{
 	case 1:
 		ClearScreen();
-		pessoa *temp;
 
 		for (i = 0; i < vector_total(&v1); i++){
-			temp = (pessoa *)vector_get(&v1, i);
-			printf("ID: %d \n", temp->ID);
-			printf("Nome : %s\n", temp->nome);
-			printf("Idade : %d\n", temp->idade);
+			printf("ID: %d \n", ((pessoa *)vector_get(&v1, i))->ID);
+			printf("Nome : %s\n", ((pessoa *)vector_get(&v1, i))->nome);
+			printf("Idade : %d\n", ((pessoa *)vector_get(&v1, i))->idade);
 			printf("\n");
 		}
 		break;

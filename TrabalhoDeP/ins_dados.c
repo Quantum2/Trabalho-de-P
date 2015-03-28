@@ -111,6 +111,11 @@ int welcome_conf(){
 		return 1;
 	}
 
+	if (n_pessoas < 5){
+		ClearScreen();
+		return 1;
+	}
+
 	for (i = 0; i < n_pessoas; i++){
 		ClearScreen();
 		pessoa *temp;

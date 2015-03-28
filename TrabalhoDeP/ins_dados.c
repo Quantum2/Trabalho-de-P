@@ -5,6 +5,7 @@
 #include "vector.h"
 #include "ins_dados.h"
 #include "util.h"
+#include "jogo.h"
 
 #define TEMPO_DE_PAUSA 2
 
@@ -17,6 +18,9 @@ struct dados{
 
 void menu(){
 	int escolha;
+	vector pes_vec;
+	vector* final;
+	vector_init(&pes_vec);
 
 	ClearScreen();
 
@@ -40,7 +44,7 @@ void menu(){
 		break;
 	case 3:
 		ClearScreen();
-		conf_actual();
+		final = conf_actual(&pes_vec);
 		menu();
 	case 5:
 		system("exit");
@@ -53,9 +57,10 @@ void menu(){
 	}	
 }
 
-void conf_actual(){
+vector* conf_actual(vector *vec){
 	FILE *fp;
 	int size, i;
+	vector_init(vec);
 	fp = fopen("db.bin", "r");
 
 	fread(&size,sizeof(int),1,fp);
@@ -64,10 +69,16 @@ void conf_actual(){
 	fread(db, sizeof(pessoa), size, fp);
 
 	for (i = 0; i < size; i++){
-		printf("%d \n", db[i].ID);
+		printf("ID: %d \n", db[i].ID);
+		printf("Nome : %s \n", db[i].nome);
+		printf("Idade : %d \n", db[i].idade);
+
+		vector_add(vec, &db[i]);
 	}
 
-	scanf("%c");
+	scanf("%s");
+	fclose(fp);
+	return vec;
 }
 
 void gravar_conf(vector vec, int size){
@@ -95,7 +106,7 @@ void gravar_conf(vector vec, int size){
 }
 
 int welcome_conf(){
-	int n_pessoas, n_conjuntos, i, escolha;
+	int n_pessoas, n_conjuntos, i, escolha, gravar_e;
 	vector v1;
 	vector_init(&v1);
 
@@ -135,7 +146,7 @@ int welcome_conf(){
 	ClearScreen();
 
 	printf("O que pretende fazer agora ?\n");
-	printf("1 - Verificar os dados\n");
+	printf("1 - Verificar e guardar os dados\n");
 	printf("2 - Prosseguir para o jogo\n");
 	printf("3 - Guardar os dados e voltar ao menu\n");
 	scanf("%d", &escolha);
@@ -151,11 +162,17 @@ int welcome_conf(){
 			printf("Idade : %d\n", ((pessoa *)vector_get(&v1, i))->idade);
 			printf("\n");
 		}
-		scanf("%c");
-		
+		printf("Pretende gravar os dados ?\n");
+		printf("1 - Sim\n2 - Nao\n");
+		scanf("%d", &gravar_e);
+		if (gravar_e == 1){
+			gravar_conf(v1, vector_total(&v1));
+		}
+		menu();
 		break;
 	case 2:
-		
+		gravar_conf(v1, vector_total(&v1));
+		comecarJogo();
 		break;
 	case 3:
 		gravar_conf(v1, vector_total(&v1));

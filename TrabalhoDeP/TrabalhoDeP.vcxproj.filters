@@ -27,6 +27,9 @@
     <ClCompile Include="util.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="jogo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ins_dados.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="jogo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

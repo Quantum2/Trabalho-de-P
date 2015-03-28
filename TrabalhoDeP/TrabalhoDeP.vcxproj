@@ -79,12 +79,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ins_dados.c" />
+    <ClCompile Include="jogo.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="util.c" />
     <ClCompile Include="vector.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ins_dados.h" />
+    <ClInclude Include="jogo.h" />
     <ClInclude Include="util.h" />
     <ClInclude Include="vector.h" />
   </ItemGroup>

@@ -61,13 +61,13 @@ int welcome_conf(){
 		ClearScreen();
 		pessoa temp;
 
-		printf("Pessoa %d\n", i);
+		printf("Pessoa %d\n", i + 1);
 		printf("Nome : ");
-		scanf_s("%s", &temp.nome);
+		scanf("%s", &temp.nome);
 		printf("Idade: ");
-		scanf_s("%d", &temp.idade);
+		scanf("%d", &temp.idade);
 
-		temp.ID = i;
+		temp.ID = i + 1;
 
 		vector_add(&v1, &temp);
 	}

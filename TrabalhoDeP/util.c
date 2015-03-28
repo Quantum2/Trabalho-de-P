@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include "util.h"
 
-#define BACKGROUND_COLOR 3
+#define BACKGROUND_COLOR 7
 #define FOREGROUND_COLOR 0
 
 void ClearScreen()

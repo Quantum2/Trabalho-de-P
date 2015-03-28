@@ -21,9 +21,10 @@ void menu(){
 	ClearScreen();
 
 	printf("Escolha a opcao pretendida\n");
-	printf("1 - Adicionar pessoas a configuracao\n");
-	printf("2 - Not implemented\n");
-	printf("3 - Mais do mesmo\n");
+	printf("1 - Criar a configuracao\n");
+	printf("2 - Modificar a configuracao\n");
+	printf("3 - Mostrar a configuracao actual\n");
+	printf("4 - Jogar !\n");
 
 	scanf_s("%d", &escolha);
 
@@ -36,9 +37,42 @@ void menu(){
 		}
 		menu();
 		break;
+	case 3:
+		ClearScreen();
+		conf_actual();
+		menu();
 	default:
 		break;
 	}	
+}
+
+void conf_actual(){
+	FILE *fp;
+	fp = fopen("db.bin", "r");
+
+}
+
+void gravar_conf(vector vec, int size){
+	FILE *fp;
+	int i;
+	pessoa *db = (pessoa *)malloc(size * sizeof(pessoa));
+
+	for (i = 0; i < size; i++){
+		db[i].ID = ((pessoa *)vector_get(&vec, i))->ID;
+		db[i].idade = ((pessoa *)vector_get(&vec, i))->idade;
+		strcpy(db[i].nome, ((pessoa *)vector_get(&vec, i))->nome);
+	}
+
+	fp = fopen("db.bin", "w");
+
+	if (fp != NULL) {
+		fwrite(db, size * sizeof(pessoa), 1, fp);
+		fclose(fp);
+	}
+	else{
+		printf("Ocorreu um erro ao tentar gravar o ficheiro !\n");
+		menu();
+	}
 }
 
 int welcome_conf(){
@@ -53,7 +87,8 @@ int welcome_conf(){
 	printf("Quantos conjuntos a considerar ?\n");
 	scanf_s("%d", &n_conjuntos);
 
-	if (n_conjuntos < 3 && n_conjuntos >(n_pessoas / 2)){
+	if (n_conjuntos < 3 || n_conjuntos > (n_pessoas / 2)){
+		ClearScreen();
 		return 1;
 	}
 
@@ -78,7 +113,7 @@ int welcome_conf(){
 	printf("O que pretende fazer agora ?\n");
 	printf("1 - Verificar os dados\n");
 	printf("2 - Prosseguir para o jogo\n");
-	printf("3 - Guardar os dados\n");
+	printf("3 - Guardar os dados e voltar ao menu\n");
 	scanf("%d", &escolha);
 
 	switch (escolha)
@@ -92,12 +127,15 @@ int welcome_conf(){
 			printf("Idade : %d\n", ((pessoa *)vector_get(&v1, i))->idade);
 			printf("\n");
 		}
+		scanf("%c");
+		
 		break;
 	case 2:
-
+		
 		break;
 	case 3:
-
+		gravar_conf(v1, vector_total(&v1));
+		menu();
 		break;
 	default:
 		break;

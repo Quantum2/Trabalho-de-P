@@ -25,6 +25,7 @@ void menu(){
 	printf("2 - Modificar a configuracao\n");
 	printf("3 - Mostrar a configuracao actual\n");
 	printf("4 - Jogar !\n");
+	printf("5 - Sair !\n");
 
 	scanf_s("%d", &escolha);
 
@@ -41,15 +42,32 @@ void menu(){
 		ClearScreen();
 		conf_actual();
 		menu();
+	case 5:
+		system("exit");
+		break;
 	default:
+		printf("Essa opcao nao existe, tente de novo\n");
+		Sleep(TEMPO_DE_PAUSA * 1000);
+		menu();
 		break;
 	}	
 }
 
 void conf_actual(){
 	FILE *fp;
+	int size, i;
 	fp = fopen("db.bin", "r");
 
+	fread(&size,sizeof(int),1,fp);
+	pessoa *db = (pessoa *)malloc(size * sizeof(pessoa));
+
+	fread(db, sizeof(pessoa), size, fp);
+
+	for (i = 0; i < size; i++){
+		printf("%d \n", db[i].ID);
+	}
+
+	scanf("%c");
 }
 
 void gravar_conf(vector vec, int size){
@@ -66,6 +84,7 @@ void gravar_conf(vector vec, int size){
 	fp = fopen("db.bin", "w");
 
 	if (fp != NULL) {
+		fwrite(&size, sizeof(int), 1, fp);
 		fwrite(db, size * sizeof(pessoa), 1, fp);
 		fclose(fp);
 	}

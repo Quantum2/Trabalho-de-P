@@ -3,6 +3,9 @@
 #include <Windows.h>
 #include "util.h"
 
+#define BACKGROUND_COLOR 3
+#define FOREGROUND_COLOR 0
+
 void ClearScreen()
 {
 	HANDLE                     hStdOut;
@@ -38,4 +41,10 @@ void ClearScreen()
 
 	/* Move the cursor home */
 	SetConsoleCursorPosition(hStdOut, homeCoords);
+}
+
+void definirBackground(){
+	char comando[30] = "color ";
+	sprintf(comando, "color %d%d", FOREGROUND_COLOR, BACKGROUND_COLOR);
+	system(comando);
 }

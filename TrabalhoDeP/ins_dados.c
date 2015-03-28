@@ -20,7 +20,7 @@ void menu(){
 
 	ClearScreen();
 
-	printf("Escolha a opçao pretendida\n");
+	printf("Escolha a opcao pretendida\n");
 	printf("1 - Adicionar pessoas a configuracao\n");
 	printf("2 - Not implemented\n");
 	printf("3 - Mais do mesmo\n");
@@ -42,7 +42,7 @@ void menu(){
 }
 
 int welcome_conf(){
-	int n_pessoas, n_conjuntos, i;
+	int n_pessoas, n_conjuntos, i, escolha;
 	vector v1;
 	vector_init(&v1);
 
@@ -70,6 +70,38 @@ int welcome_conf(){
 		temp.ID = i + 1;
 
 		vector_add(&v1, &temp);
+	}
+
+	ClearScreen();
+
+	printf("O que pretende fazer agora ?\n");
+	printf("1 - Verificar os dados\n");
+	printf("2 - Prosseguir para o jogo\n");
+	printf("3 - Guardar os dados\n");
+	scanf("%d", &escolha);
+
+	switch (escolha)
+	{
+	case 1:
+		ClearScreen();
+		pessoa *temp;
+
+		for (i = 0; i < vector_total(&v1); i++){
+			temp = (pessoa *)vector_get(&v1, i);
+			printf("ID: %d \n", temp->ID);
+			printf("Nome : %s\n", temp->nome);
+			printf("Idade : %d\n", temp->idade);
+			printf("\n");
+		}
+		break;
+	case 2:
+
+		break;
+	case 3:
+
+		break;
+	default:
+		break;
 	}
 
 	return 0;

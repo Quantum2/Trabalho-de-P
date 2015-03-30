@@ -48,3 +48,14 @@ void definirBackground(){
 	sprintf(comando, "color %d%d", FOREGROUND_COLOR, BACKGROUND_COLOR);
 	system(comando);
 }
+
+unsigned int
+randr(unsigned int min, unsigned int max)
+{
+	time_t t;
+	srand((unsigned)time(&t));
+
+	double scaled = (double)rand() / RAND_MAX;
+
+	return (max - min + 1)*scaled + min;
+}

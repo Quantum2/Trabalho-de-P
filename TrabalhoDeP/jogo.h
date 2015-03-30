@@ -1,6 +1,14 @@
-#ifndef JOGO
-#define JOGO
+#ifndef JOGO_INIT
+#define JOGO_INIT
+#include "vector.h"
 
-void comecarJogo();
+typedef struct conjuntos grupos;
+struct conjuntos{
+	vector pessoas;
+	int quantidade;
+};
+
+void comecarJogo(vector *vec);
+grupos distribuir(vector *vec);
 
 #endif

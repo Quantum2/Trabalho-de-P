@@ -18,9 +18,7 @@ struct dados{
 
 void menu(){
 	int escolha;
-	vector pes_vec;
-	vector* final;
-	vector_init(&pes_vec);
+	vector* v1 = malloc(sizeof(vector));
 
 	ClearScreen();
 
@@ -44,8 +42,13 @@ void menu(){
 		break;
 	case 3:
 		ClearScreen();
-		final = conf_actual(&pes_vec);
+		v1 = conf_actual(v1);
 		menu();
+	case 4:
+		ClearScreen();
+		v1 = conf_actual(v1);
+		comecarJogo(v1);
+		break;
 	case 5:
 		system("exit");
 		break;
@@ -172,7 +175,7 @@ int welcome_conf(){
 		break;
 	case 2:
 		gravar_conf(v1, vector_total(&v1));
-		comecarJogo();
+		comecarJogo(&v1);
 		break;
 	case 3:
 		gravar_conf(v1, vector_total(&v1));

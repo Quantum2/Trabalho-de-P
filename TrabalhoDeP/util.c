@@ -52,10 +52,13 @@ void definirBackground(){
 unsigned int
 randr(unsigned int min, unsigned int max)
 {
-	time_t t;
-	srand((unsigned)time(&t));
-
 	double scaled = (double)rand() / RAND_MAX;
 
 	return (max - min + 1)*scaled + min;
+}
+
+unsigned int 
+divisor(unsigned int dividend, unsigned int divisor)
+{
+	return (dividend + (divisor / 2)) / divisor;
 }

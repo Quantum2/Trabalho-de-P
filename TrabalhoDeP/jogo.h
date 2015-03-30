@@ -9,6 +9,6 @@ struct conjuntos{
 };
 
 void comecarJogo(vector *vec);
-grupos distribuir(vector *vec);
+grupos* distribuir(vector *vec);
 
 #endif

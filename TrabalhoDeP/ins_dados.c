@@ -9,13 +9,6 @@
 
 #define TEMPO_DE_PAUSA 2
 
-typedef struct dados pessoa;
-struct dados{
-	int ID;
-	int idade;
-	char nome[100];
-};
-
 void menu(){
 	int escolha;
 	vector* v1 = malloc(sizeof(vector));

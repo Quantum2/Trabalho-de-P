@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <Windows.h>
+#include <time.h>
 #include "util.h"
 
 #define BACKGROUND_COLOR 7

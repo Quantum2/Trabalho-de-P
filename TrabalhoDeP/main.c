@@ -7,10 +7,8 @@
 #include "ins_dados.h"
 #include "util.h"
 
-int main(int argc, char *argv[]){
+void main(int argc, char *argv[]){
 	definirBackground();
 	
 	menu();
-
-	return 0;
 }

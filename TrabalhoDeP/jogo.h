@@ -15,5 +15,6 @@ void mostrarConjuntos(grupos* dis);
 float calcDispers(grupos* dis, int num_conjunto);
 void jogo(grupos* dis, vector *vec);
 void ajuda();
+void inserirPessoa(grupos* dis, vector *vec, char nome[], int id_conjunto);
 
 #endif

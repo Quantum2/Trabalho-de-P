@@ -72,7 +72,8 @@ vector* conf_actual(vector *vec){
 		vector_add(vec, &db[i]);
 	}
 
-	scanf("%s");
+	fflush(stdin);
+	getchar();
 	fclose(fp);
 	return vec;
 }

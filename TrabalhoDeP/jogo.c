@@ -92,7 +92,8 @@ void mostrarConjuntos(grupos* dis){
 		printf("}\n");
 	}
 
-	scanf_s("%d");
+	fflush(stdin);
+	getchar();
 }
 
 float calcDispers(grupos* dis, int num_conjunto){
@@ -115,8 +116,8 @@ float calcDispers(grupos* dis, int num_conjunto){
 }
 
 void jogo(grupos* dis, vector *vec){
-	int turno = 1, temp_int;
-	char comando[TAMANHO_DO_COMANDO], temp[TAMANHO_DO_COMANDO];
+	int turno = 1, temp_int, y;
+	char comando[TAMANHO_DO_COMANDO], temp[TAMANHO_DO_COMANDO], x[TAMANHO_DO_COMANDO];
 	char* split;
 
 	ClearScreen();
@@ -143,9 +144,29 @@ void jogo(grupos* dis, vector *vec){
 		split = strtok(temp, " ");
 		split = strtok(NULL, " \n");
 		temp_int = atoi(split);
-		printf("A dispersao do grupo %d e %f\n", temp_int, calcDispers(dis, temp_int));
+		temp_int--;
+		printf("A dispersao do grupo %d e %f\n", temp_int + 1, calcDispers(dis, temp_int));
 		fflush(stdin);
 		getchar();
+		jogo(dis, vec);
+	}
+	else if (strcmp(split, "inserir") == 0){
+		split = strtok(temp, " ");
+		split = strtok(NULL, " \n");
+		strcpy(x, split);
+		split = strtok(NULL, " \n");
+		y = atoi(split);
+
+		inserirPessoa(dis, vec, x, y);
+	}
+	else if (strcmp(temp, "conjuntos") == 0){
+		ClearScreen();
+		mostrarConjuntos(dis);
+		jogo(dis, vec);
+	}
+	else if (strcmp(temp, "pessoas") == 0){
+		ClearScreen();
+		conf_actual(vec);
 		jogo(dis, vec);
 	}
 	else{
@@ -157,6 +178,7 @@ void ajuda(){
 	ClearScreen();
 	printf("disp <x> - Calcular a dispersao do conjunto X\n");
 	printf("conjuntos - Mostra todos os conjuntos existentes\n");
+	printf("pessoas - Mostrar todas as pessoas na base de dados\n");
 	printf("inserir <x> <y> - Inserir a pessoa com o nome X no conjunto Y\n");
 	printf("eliminar <x> <y> - Eliminar a pessoa com o nome X do conjunto Y\n");
 	printf("transf <x> <y> - Transferir a pessoa com o nome X para o conjunto Y\n");
@@ -166,4 +188,26 @@ void ajuda(){
 
 	fflush(stdin);
 	getchar();
+}
+
+void inserirPessoa(grupos* dis, vector *vec, char nome[], int id_conjunto){
+	int ID, i, j;
+	bool check = false;
+	pessoa* temp;
+
+	for (i = 0; i < vector_total(vec); i++){
+		if (strcmp(nome, ((pessoa *)vector_get(vec, i))->nome) == 0)
+			ID = i;
+	}
+
+	temp = malloc(sizeof(pessoa));
+
+	for (i = 0; i < dis[id_conjunto].num_pessoas; i++){
+		if (((pessoa *)vector_get(&dis[id_conjunto].pessoas, i))->ID == temp->ID)
+			check = true;
+	}
+
+	if (!check){
+
+	}
 }

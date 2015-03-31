@@ -11,11 +11,13 @@
 
 void comecarJogo(vector *vec){
 	grupos* dis;
+	float disp;
 
 	ClearScreen();
 
 	dis = distribuir(vec);
 	mostrarConjuntos(dis);
+	jogo(dis);
 }
 
 grupos* distribuir(vector *vec){
@@ -87,4 +89,27 @@ void mostrarConjuntos(grupos* dis){
 	}
 
 	scanf_s("%d");
+}
+
+float calcDispers(grupos* dis, int num_conjunto){
+	float dispersao, temp, temp2 = 0;
+	int j, k, pares = 0;
+
+	for (j = 0; j < dis[num_conjunto].num_pessoas; j++){
+		for (k = 0; k < dis[num_conjunto].num_pessoas; k++){
+			if (k != j){
+				temp = fabs((((pessoa *)vector_get(&dis[num_conjunto].pessoas, j))->idade) - (((pessoa *)vector_get(&dis[num_conjunto].pessoas, k))->idade));
+				pares++;
+			}
+		}
+		temp2 += temp;
+	}
+
+	dispersao = temp2 / pares;
+
+	return dispersao;
+}
+
+void jogo(grupos* dis){
+
 }

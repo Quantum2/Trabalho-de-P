@@ -50,6 +50,13 @@ void definirBackground(){
 	system(comando);
 }
 
+void definirCorTexto(char cor){
+	char comando[30] = "color ";
+	sprintf(comando, "color %d%c", FOREGROUND_COLOR, cor);
+	system(comando);
+}
+
+
 unsigned int
 randr(unsigned int min, unsigned int max)
 {

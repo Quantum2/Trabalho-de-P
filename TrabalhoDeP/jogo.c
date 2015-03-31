@@ -11,6 +11,8 @@
 
 #define TAMANHO_DO_COMANDO 50
 
+int turno = 0;                  //Arranjar maneira de substituir esta global
+
 void comecarJogo(vector *vec){
 	grupos* dis;
 
@@ -116,14 +118,14 @@ float calcDispers(grupos* dis, int num_conjunto){
 }
 
 void jogo(grupos* dis, vector *vec){
-	int turno = 1, temp_int, y;
+	int temp_int, y, i;
 	char comando[TAMANHO_DO_COMANDO], temp[TAMANHO_DO_COMANDO], x[TAMANHO_DO_COMANDO];
 	char* split;
 
 	ClearScreen();
 	fflush(stdin);
 
-	printf("Jogador actual: %d\n", turno);
+	printf("Vez do jogador %d\n", turno + 1);
 	printf("Para comandos disponiveis escreva 'help'\n");
 	fgets(comando, TAMANHO_DO_COMANDO, stdin);
 	strtok(comando, "\n");
@@ -158,6 +160,16 @@ void jogo(grupos* dis, vector *vec){
 		y = atoi(split);
 
 		inserirPessoa(dis, vec, x, y);
+		ClearScreen();
+
+		for (i = 0; i < dis[0].num_conjuntos; i++){
+			printf("A dispersao do grupo %d e %f\n", i + 1, calcDispers(dis, i));
+		}
+
+		turno = turno ^ 1;
+		fflush(stdin);
+		getchar();
+		jogo(dis, vec);
 	}
 	else if (strcmp(temp, "conjuntos") == 0){
 		ClearScreen();
@@ -191,7 +203,7 @@ void ajuda(){
 }
 
 void inserirPessoa(grupos* dis, vector *vec, char nome[], int id_conjunto){
-	int ID, i, j;
+	int ID, i;
 	bool check = false;
 	pessoa* temp;
 
@@ -202,12 +214,14 @@ void inserirPessoa(grupos* dis, vector *vec, char nome[], int id_conjunto){
 
 	temp = malloc(sizeof(pessoa));
 
-	for (i = 0; i < dis[id_conjunto].num_pessoas; i++){
-		if (((pessoa *)vector_get(&dis[id_conjunto].pessoas, i))->ID == temp->ID)
+	for (i = 0; i < dis[id_conjunto - 1].num_pessoas; i++){
+		if (((pessoa *)vector_get(&dis[id_conjunto - 1].pessoas, i))->ID == temp->ID)
 			check = true;
 	}
 
 	if (!check){
-
+		temp = vector_get(vec, ID);
+		vector_add(&dis[id_conjunto - 1].pessoas, temp);
+		dis[id_conjunto - 1].num_pessoas++;
 	}
 }

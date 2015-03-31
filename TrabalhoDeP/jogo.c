@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include <time.h>
+#include <string.h>
 #include "jogo.h"
 #include "vector.h"
 #include "ins_dados.h"
@@ -11,13 +12,15 @@
 
 void comecarJogo(vector *vec){
 	grupos* dis;
-	float disp;
 
 	ClearScreen();
 
 	dis = distribuir(vec);
 	mostrarConjuntos(dis);
-	jogo(dis);
+
+	ClearScreen();
+
+	jogo(dis, vec);
 }
 
 grupos* distribuir(vector *vec){
@@ -97,7 +100,7 @@ float calcDispers(grupos* dis, int num_conjunto){
 
 	for (j = 0; j < dis[num_conjunto].num_pessoas; j++){
 		for (k = 0; k < dis[num_conjunto].num_pessoas; k++){
-			if (k != j){
+			if (k != j && k > j){
 				temp = fabs((((pessoa *)vector_get(&dis[num_conjunto].pessoas, j))->idade) - (((pessoa *)vector_get(&dis[num_conjunto].pessoas, k))->idade));
 				pares++;
 			}
@@ -110,6 +113,39 @@ float calcDispers(grupos* dis, int num_conjunto){
 	return dispersao;
 }
 
-void jogo(grupos* dis){
+void jogo(grupos* dis, vector *vec){
+	int turno = 1;
+	char comando[50];
 
+	ClearScreen();
+	fflush(stdin);
+
+	printf("Jogador actual: %d\n", turno);
+	printf("Para comandos disponiveis escreva 'help'\n");
+	scanf("%s", &comando);
+
+	if (strcmp(comando, "help") == 0){
+		ajuda();
+		fflush(stdin);
+		jogo(dis, vec);
+	}
+	else if (strcmp(comando, "menu") == 0)
+		menu();
+	else{
+		printf("Esse comando nao existe, tente de novo\n");
+		jogo(dis, vec);
+	}
+}
+
+void ajuda(){
+	ClearScreen();
+	printf("calcular disp <x> - Calcular a dispersao do conjunto X\n");
+	printf("mostrar conjuntos - Mostra todos os conjuntos existentes\n");
+	printf("inserir <x> <y> - Inserir a pessoa com o nome X no conjunto Y\n");
+	printf("eliminar <x> <y> - Eliminar a pessoa com o nome X do conjunto Y\n");
+	printf("transf <x> <y> - Transferir a pessoa com o nome X para o conjunto Y\n");
+	printf("menu - Voltar ao menu\n");
+	printf("\nPara voltar ao jogo, pressione qualquer tecla...\n");
+	fflush(stdin);
+	getchar();
 }

@@ -13,6 +13,7 @@ void comecarJogo(vector *vec);
 grupos* distribuir(vector *vec);
 void mostrarConjuntos(grupos* dis);
 float calcDispers(grupos* dis, int num_conjunto);
-void jogo(grupos* dis);
+void jogo(grupos* dis, vector *vec);
+void ajuda();
 
 #endif

@@ -4,6 +4,7 @@
 #include <math.h>
 #include <time.h>
 #include <string.h>
+#include <Windows.h>
 #include "jogo.h"
 #include "vector.h"
 #include "ins_dados.h"
@@ -161,6 +162,7 @@ void jogo(grupos* dis, vector *vec){
 
 		inserirPessoa(dis, vec, x, y);
 		ClearScreen();
+		mostrarConjuntos(dis);
 
 		for (i = 0; i < dis[0].num_conjuntos; i++){
 			printf("A dispersao do grupo %d e %f\n", i + 1, calcDispers(dis, i));
@@ -180,6 +182,7 @@ void jogo(grupos* dis, vector *vec){
 
 		eliminarPessoa(dis, vec, x, y);
 		ClearScreen();
+		mostrarConjuntos(dis);
 
 		for (i = 0; i < dis[0].num_conjuntos; i++){
 			printf("A dispersao do grupo %d e %f\n", i + 1, calcDispers(dis, i));
@@ -248,6 +251,8 @@ void inserirPessoa(grupos* dis, vector *vec, char nome[], int id_conjunto){
 void eliminarPessoa(grupos* dis, vector *vec, char nome[], int id_conjunto){
 	int ID, i;
 	pessoa* temp;
+	vector v_temp;
+	vector_init(&v_temp);
 
 	for (i = 0; i < vector_total(vec); i++){
 		if (strcmp(nome, ((pessoa *)vector_get(vec, i))->nome) == 0)
@@ -258,15 +263,18 @@ void eliminarPessoa(grupos* dis, vector *vec, char nome[], int id_conjunto){
 	temp = vector_get(vec, ID);
 
 	for (i = 0; i < dis[id_conjunto - 1].num_pessoas; i++){
-		if (((pessoa *)vector_get(&dis[id_conjunto - 1].pessoas, i))->ID == temp->ID){
-			if ((dis[id_conjunto - 1].num_pessoas - 1) >= 2){
-				vector_delete(&dis[id_conjunto - 1].pessoas, i);
-				dis[id_conjunto - 1].num_pessoas--;
+		if (((pessoa *)vector_get(&dis[id_conjunto - 1].pessoas, i))->ID != temp->ID){
+			if ((dis[id_conjunto - 1].num_pessoas - 1) < 2){
+				printf("Jogada invalida\n");
+				Sleep(1000);
+				return;
 			}
 			else{
-				printf("Jogada invalida\n");
-				break;
+				vector_add(&v_temp, (pessoa *)vector_get(&dis[id_conjunto - 1].pessoas, i));
 			}
 		}
 	}
+
+	dis[id_conjunto - 1].num_pessoas--;
+	dis[id_conjunto - 1].pessoas = v_temp;
 }

@@ -119,7 +119,7 @@ float calcDispers(grupos* dis, int num_conjunto){
 }
 
 void jogo(grupos* dis, vector *vec){
-	int temp_int, y, i;
+	int temp_int, y, i, z;
 	char comando[TAMANHO_DO_COMANDO], temp[TAMANHO_DO_COMANDO], x[TAMANHO_DO_COMANDO];
 	char* split;
 
@@ -193,6 +193,29 @@ void jogo(grupos* dis, vector *vec){
 		getchar();
 		jogo(dis, vec);
 	}
+	else if (strcmp(split, "transferir") == 0){
+		split = strtok(temp, " ");
+		split = strtok(NULL, " \n");
+		strcpy(x, split);
+		split = strtok(NULL, " \n");
+		y = atoi(split);
+		split = strtok(NULL, " \n");
+		z = atoi(split);
+
+		eliminarPessoa(dis, vec, x, y);
+		inserirPessoa(dis, vec, x, z);
+		ClearScreen();
+		mostrarConjuntos(dis);
+
+		for (i = 0; i < dis[0].num_conjuntos; i++){
+			printf("A dispersao do grupo %d e %f\n", i + 1, calcDispers(dis, i));
+		}
+
+		turno = turno ^ 1;
+		fflush(stdin);
+		getchar();
+		jogo(dis, vec);
+	}
 	else if (strcmp(temp, "conjuntos") == 0){
 		ClearScreen();
 		mostrarConjuntos(dis);
@@ -215,6 +238,7 @@ void ajuda(){
 	printf("pessoas - Mostrar todas as pessoas na base de dados\n");
 	printf("inserir <x> <y> - Inserir a pessoa com o nome X no conjunto Y\n");
 	printf("eliminar <x> <y> - Eliminar a pessoa com o nome X do conjunto Y\n");
+	printf("transferir <x> <y> <z> - Transferir a pessoa com o nome X do conjunto Y para o conjunto Z\n");
 	printf("transf <x> <y> - Transferir a pessoa com o nome X para o conjunto Y\n");
 	printf("menu - Voltar ao menu\n");
 	printf("sair - Para terminar a execucao do jogo\n");

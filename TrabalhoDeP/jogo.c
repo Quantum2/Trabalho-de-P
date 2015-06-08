@@ -4,7 +4,9 @@
 #include <math.h>
 #include <time.h>
 #include <string.h>
+#include <float.h>
 #include <Windows.h>
+#include <conio.h>
 #include "jogo.h"
 #include "vector.h"
 #include "ins_dados.h"
@@ -12,7 +14,8 @@
 
 #define TAMANHO_DO_COMANDO 50
 
-int turno = 0;      //Arranjar maneira de substituir esta global
+int turno = 0;                      //Arranjar maneira de substituir esta global
+float dispers_anterior = FLT_MAX;   //E esta também
 
 void comecarJogo(vector *vec){
 	grupos* dis;
@@ -168,6 +171,8 @@ void jogo(grupos* dis, vector *vec){
 			printf("A dispersao do grupo %d e %f\n", i + 1, calcDispers(dis, i));
 		}
 
+		verFimJogo(calcDispers(dis, y));
+		dispers_anterior = calcDispers(dis, y);
 		turno = turno ^ 1;
 		fflush(stdin);
 		getchar();
@@ -188,6 +193,8 @@ void jogo(grupos* dis, vector *vec){
 			printf("A dispersao do grupo %d e %f\n", i + 1, calcDispers(dis, i));
 		}
 
+		verFimJogo(calcDispers(dis, y));
+		dispers_anterior = calcDispers(dis, y);
 		turno = turno ^ 1;
 		fflush(stdin);
 		getchar();
@@ -211,6 +218,8 @@ void jogo(grupos* dis, vector *vec){
 			printf("A dispersao do grupo %d e %f\n", i + 1, calcDispers(dis, i));
 		}
 
+		verFimJogo(calcDispers(dis, z));
+		dispers_anterior = calcDispers(dis, z);
 		turno = turno ^ 1;
 		fflush(stdin);
 		getchar();
@@ -301,4 +310,16 @@ void eliminarPessoa(grupos* dis, vector *vec, char nome[], int id_conjunto){
 
 	dis[id_conjunto - 1].num_pessoas--;
 	dis[id_conjunto - 1].pessoas = v_temp;
+}
+
+void verFimJogo(float actual){
+	if (actual >= dispers_anterior){
+		ClearScreen();
+		printf("O jogo acabou, o jogador %d ganhou\n", turno + 1);
+		printf("Pressione qualquer tecla para terminar a execucao\n");
+		_getch();
+		exit(0);
+	}
+	else
+		return;
 }

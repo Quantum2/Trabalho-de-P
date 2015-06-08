@@ -56,7 +56,6 @@ void definirCorTexto(char cor){
 	system(comando);
 }
 
-
 unsigned int
 randr(unsigned int min, unsigned int max)
 {

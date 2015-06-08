@@ -17,5 +17,6 @@ void jogo(grupos* dis, vector *vec);
 void ajuda();
 void inserirPessoa(grupos* dis, vector *vec, char nome[], int id_conjunto);
 void eliminarPessoa(grupos* dis, vector *vec, char nome[], int id_conjunto);
+void verFimJogo(float actual);
 
 #endif
